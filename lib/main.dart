@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:italian_english_games_flutter/game_menu.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,6 +15,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.indigo,
       ),
       home: MyHomePage(title: 'Italian-English Games'),
+      initialRoute: "/",
+      routes: {
+        '/menu': (context) => GameMenu(title: "Titolo del gioco")
+      },
     );
   }
 }
@@ -27,13 +32,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: ElevatedButton(
                       child: Text("Testo di prova"),
                       onPressed: () {
-                        //TODO NAVIGAZIONE
+                        Navigator.pushNamed(context, '/menu',);
                       },
                       style: ElevatedButton.styleFrom(
                           primary: Color(0xFFF9AA33),
@@ -102,7 +100,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Text(
                       'TROVA LE PAROLE!',
                       textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     )),
