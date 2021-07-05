@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class GameMenu extends StatefulWidget {
@@ -43,15 +44,47 @@ class _GameMenu extends State<GameMenu> {
               ),
             ),
             Container(
-                margin: EdgeInsets.only(top:50),
-              child: Text(
-                "NOME DEL GIOCO",
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold
-                  )
-              )
-            )
+                margin: EdgeInsets.only(top: 70),
+                child: Text("NOME DEL GIOCO",
+                    style:
+                        TextStyle(fontSize: 30, fontWeight: FontWeight.bold))),
+            Container(
+              margin: EdgeInsets.only(top: 100),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Image.asset(
+                      'imgs/gioco-impiccato.jpg',
+                      height: 150,
+                      width: 150,
+                    ),
+                  ),
+                  Container(
+                      margin: EdgeInsets.only(left: 10),
+                      child: Text(
+                        "Indovina la parola\n inglese che verrà "
+                        "\nselezionata\n casualmente ad ogni\n partita!"
+                        " Quanto è ampio\n"
+                        'il tuo vocabolario?',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
+                      ))
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top:100),
+              child: ElevatedButton(
+                  child: Text("Gioca!"),
+                  onPressed: () {
+                    //TODO navigation
+                  },
+                  style: ElevatedButton.styleFrom(
+                      primary: Color(0xFFF9AA33),
+                      textStyle: TextStyle(fontSize: 22))),
+            ),
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
