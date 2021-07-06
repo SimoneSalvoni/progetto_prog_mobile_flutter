@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:italian_english_games_flutter/auth/login.dart';
+import 'package:italian_english_games_flutter/auth/completeReg.dart';
 import 'package:italian_english_games_flutter/game_menu.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
-void main() {
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -17,7 +25,9 @@ class MyApp extends StatelessWidget {
       home: MyHomePage(title: 'Italian-English Games'),
       initialRoute: "/",
       routes: {
-        '/menu': (context) => GameMenu(title: "Titolo del gioco")
+        '/menu': (context) => GameMenu(title: "Titolo del gioco"),
+        '/login': (context) => LoginScreen(title: "Login"),
+        '/completeReg': (context) => CompleteRegScreen(title:"Completa la registrazione")
       },
     );
   }
@@ -33,33 +43,74 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final firebase_storage.FirebaseStorage storage =
+      firebase_storage.FirebaseStorage.instance;
+  String _username="";
+  String? _imageUrl;
+
+
+  void pickUserInfo() async{
+    _username = auth.currentUser!.displayName!;
+    var storageRef = storage.ref().child(auth.currentUser!.uid);
+    _imageUrl = await storageRef.getDownloadURL();
+    setState(() {});
+  }
+
+  Widget buildDrawerHeader() {
+    if (_imageUrl != null) {
+      return DrawerHeader(
+          decoration: BoxDecoration(
+            color: Color(0xFFF9AA33),
+          ),
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Image.network(_imageUrl!, width: 100, height: 100),
+                Container(
+                    margin: EdgeInsets.only(top: 5), child: Text(_username))
+              ]));
+    } else {
+      return DrawerHeader(
+          decoration: BoxDecoration(
+            color: Color(0xFFF9AA33),
+          ),
+          child: Column(children: <Widget>[
+            Image.asset('imgs/default_profile.jpg', width: 50, height: 50),
+            Container(margin: EdgeInsets.only(top: 5), child: Text(_username))
+          ]));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    //BISOGNEREBBE AVERE DEI METODI CHE SE STO ANCORA AUTENTICANDO RETURN ALTRO NEL MENTRE
+    //IDEM QUALCOSA CHE MI GESTISCE GLI ERRORI
+   // if(!_initialized) return Loading();
+    //if(_error) return AuthError();
+
+    FirebaseAuth.instance.userChanges().listen((User? user){
+      if (user==null)  {
+        Navigator.pushNamed(context, '/login');
+      }
+      else {
+        pickUserInfo();
+      }
+    });
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
       drawer: Drawer(
           child: ListView(padding: EdgeInsets.zero, children: <Widget>[
-        DrawerHeader(
-            decoration: BoxDecoration(
-              color: Color(0xFFF9AA33),
+            buildDrawerHeader(),
+            ListTile(
+              title: Text('Contatti'),
+              onTap: () {},
             ),
-            child: Text('Prova Drawer Header')),
-        ListTile(
-          title: Text('FAQ'),
-          onTap: () {},
-        ),
-        ListTile(
-          title: Text('Logout'),
-          onTap: (){}
-        )
-      ])),
+            ListTile(title: Text('Logout'), onTap: () {FirebaseAuth.instance.signOut();}) //nell'esempio c'era await all'inizio...
+          ])),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -89,7 +140,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: ElevatedButton(
                       child: Text("Testo di prova"),
                       onPressed: () {
-                        Navigator.pushNamed(context, '/menu',);
+                        Navigator.pushNamed(
+                          context,
+                          '/menu',
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                           primary: Color(0xFFF9AA33),
@@ -101,7 +155,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       'TROVA LE PAROLE!',
                       textAlign: TextAlign.center,
                       style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     )),
               ],
             )
@@ -111,3 +165,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1090085978092",
+    "project_id": "italianenglishgamesflutter",
+    "storage_bucket": "italianenglishgamesflutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1090085978092:android:ccc5af8dc62ab565764ac9",
+        "android_client_info": {
+          "package_name": "com.example.italian_english_games_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1090085978092-6mdgjvc4vg4suip59i34a6sjlo1nmtiu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDJVbweVOFdPPOMVISLC6JQbzY15djHIw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1090085978092-6mdgjvc4vg4suip59i34a6sjlo1nmtiu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
