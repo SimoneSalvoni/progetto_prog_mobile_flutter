@@ -49,33 +49,30 @@ class _GameMenu extends State<GameMenu> {
                     style:
                         TextStyle(fontSize: 30, fontWeight: FontWeight.bold))),
             Container(
-              margin: EdgeInsets.only(top: 100),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Image.asset(
-                      'imgs/gioco-impiccato.jpg',
-                      height: 150,
-                      width: 150,
-                    ),
-                  ),
-                  Container(
-                      margin: EdgeInsets.only(left: 10),
-                      child: Text(
-                        "Indovina la parola\n inglese che verrà "
-                        "\nselezionata\n casualmente ad ogni\n partita!"
-                        " Quanto è ampio\n"
-                        'il tuo vocabolario?',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
-                      ))
-                ],
+              margin: EdgeInsets.only(top: 50),
+              child: Align(
+                alignment: Alignment.center,
+                child: Image.asset(
+                  'imgs/gioco-impiccato.jpg',
+                  height: 150,
+                  width: 150,
+                ),
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top:100),
+              margin: EdgeInsets.only(left: 10, top: 20),
+              child: Text(
+                  "Indovina la parola inglese che verrà selezionata casualmente ad ogni partita! Quanto è ampio il tuo vocabolario?",
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.fade,
+              style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20)
+               ),
+            ),
+
+            Container(
+              margin: EdgeInsets.only(top:50),
               child: ElevatedButton(
                   child: Text("Gioca!"),
                   onPressed: () {
