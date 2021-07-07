@@ -110,6 +110,10 @@ class _MyHomePageState extends State<MyHomePage> {
               title: Text('Contatti'),
               onTap: () {},
             ),
+            ListTile(
+              title: Text('Profilo'),
+              onTap: () {Navigator.pushNamed(context, "/profile");},
+            ),
             ListTile(title: Text('Logout'), onTap: () {FirebaseAuth.instance.signOut();}) //nell'esempio c'era await all'inizio...
           ])),
       body: Center(
