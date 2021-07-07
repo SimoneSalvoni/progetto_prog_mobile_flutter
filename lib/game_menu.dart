@@ -11,22 +11,35 @@ class GameMenu extends StatefulWidget {
 
 class _GameMenu extends State<GameMenu> {
 
+  Widget buildDialogue(){
+    return AlertDialog(
+      title: Text("Info"),
+      content: Text("Questo è un gioco in cui bisogna scoprire una parola inglese scelta casualmente "
+          "tra quelle più utilizzate nella lingua. All'inizio saprai quante lettere compongono"
+          "quella parola. A quel punto potrai iniziare a provare ad inserire le lettere che pensi "
+          "possano formarla. Attenzione però, hai un numero di tentativi limitati!"),
+      actions: <Widget>[
+        TextButton(
+          child: Text("Chiudi"),
+          onPressed: (){
+            Navigator.pop(context, 'Cancel');
+          },
+        )
+      ]
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-        leading: BackButton(
-          onPressed:(){
-            Navigator.pushNamed(context, '/');
-          },
-        )
-      ),
+          title: Text(widget.title),
+          leading: BackButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/');
+            },
+          )),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
         child: Column(
           children: <Widget>[
             Container(
@@ -36,7 +49,10 @@ class _GameMenu extends State<GameMenu> {
                 child: ElevatedButton(
                     child: Text("Info"),
                     onPressed: () {
-                      //TODO info popup
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) => buildDialogue()
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                         primary: Color(0xFFF9AA33),
@@ -44,12 +60,12 @@ class _GameMenu extends State<GameMenu> {
               ),
             ),
             Container(
-                margin: EdgeInsets.only(top: 70),
-                child: Text("NOME DEL GIOCO",
+                margin: EdgeInsets.only(top: 50),
+                child: Text("IMPICCATO",
                     style:
-                        TextStyle(fontSize: 30, fontWeight: FontWeight.bold))),
+                        TextStyle(fontSize: 50, fontWeight: FontWeight.bold))),
             Container(
-              margin: EdgeInsets.only(top: 50),
+              margin: EdgeInsets.only(top: 30),
               child: Align(
                 alignment: Alignment.center,
                 child: Image.asset(
@@ -88,3 +104,4 @@ class _GameMenu extends State<GameMenu> {
     );
   }
 }
+
