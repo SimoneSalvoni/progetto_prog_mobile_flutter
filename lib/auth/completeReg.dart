@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CompleteRegScreen extends StatefulWidget {
@@ -16,6 +17,7 @@ class _CompleteRegScreen extends State<CompleteRegScreen> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final firebase_storage.FirebaseStorage storage =
       firebase_storage.FirebaseStorage.instance;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
   String _userUid = "";
   TextEditingController _userListener = TextEditingController();
   String _username = "";
@@ -46,6 +48,12 @@ class _CompleteRegScreen extends State<CompleteRegScreen> {
     MI DA' ERRORE L'EXCEPTION ANCHE SE L'HO PRESA DAL SITO...
      */
       if (_image != null) await storageRef.putFile(_image!);
+
+      var recordRef = firestore.collection("userRecords");
+      await recordRef.doc(auth.currentUser!.uid).set({
+        'impRecord': 0
+      });
+
       Navigator.pushNamed(context, '/');
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -73,12 +81,7 @@ class _CompleteRegScreen extends State<CompleteRegScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: Text(widget.title),
-            leading: BackButton(
-              onPressed: () {
-                //TODO
-              },
-            )),
+            title: Text(widget.title)),
         body: Center(
             child: Column(
           children: <Widget>[

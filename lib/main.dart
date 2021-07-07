@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:italian_english_games_flutter/auth/login.dart';
 import 'package:italian_english_games_flutter/auth/completeReg.dart';
 import 'package:italian_english_games_flutter/game_menu.dart';
+import 'package:italian_english_games_flutter/profile/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -27,7 +28,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/menu': (context) => GameMenu(title: "Titolo del gioco"),
         '/login': (context) => LoginScreen(title: "Login"),
-        '/completeReg': (context) => CompleteRegScreen(title:"Completa la registrazione")
+        '/completeReg': (context) => CompleteRegScreen(title:"Completa la registrazione"),
+        '/profile': (context) => ProfileScreen(title: "Profilo")
       },
     );
   }
