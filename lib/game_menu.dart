@@ -13,19 +13,19 @@ class _GameMenu extends State<GameMenu> {
 
   Widget buildDialogue(){
     return AlertDialog(
-      title: Text("Info"),
-      content: Text("Questo è un gioco in cui bisogna scoprire una parola inglese scelta casualmente "
-          "tra quelle più utilizzate nella lingua. All'inizio saprai quante lettere compongono"
-          "quella parola. A quel punto potrai iniziare a provare ad inserire le lettere che pensi "
-          "possano formarla. Attenzione però, hai un numero di tentativi limitati!"),
-      actions: <Widget>[
-        TextButton(
-          child: Text("Chiudi"),
-          onPressed: (){
-            Navigator.pop(context, 'Cancel');
-          },
-        )
-      ]
+        title: Text("Info"),
+        content: Text("Questo è un gioco in cui bisogna scoprire una parola inglese scelta casualmente "
+            "tra quelle più utilizzate nella lingua. All'inizio saprai quante lettere compongono"
+            "quella parola. A quel punto potrai iniziare a provare ad inserire le lettere che pensi "
+            "possano formarla. Attenzione però, hai un numero di tentativi limitati!"),
+        actions: <Widget>[
+          TextButton(
+            child: Text("Chiudi"),
+            onPressed: (){
+              Navigator.pop(context, 'Cancel');
+            },
+          )
+        ]
     );
   }
 
@@ -60,35 +60,39 @@ class _GameMenu extends State<GameMenu> {
               ),
             ),
             Container(
-                margin: EdgeInsets.only(top: 50),
+                margin: EdgeInsets.only(top: 70),
                 child: Text("IMPICCATO",
                     style:
-                        TextStyle(fontSize: 50, fontWeight: FontWeight.bold))),
+                    TextStyle(fontSize: 50, fontWeight: FontWeight.bold))),
             Container(
-              margin: EdgeInsets.only(top: 30),
-              child: Align(
-                alignment: Alignment.center,
-                child: Image.asset(
-                  'imgs/gioco-impiccato.jpg',
-                  height: 150,
-                  width: 150,
-                ),
+              margin: EdgeInsets.only(top: 80),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Image.asset(
+                      'imgs/gioco-impiccato.jpg',
+                      height: 150,
+                      width: 150,
+                    ),
+                  ),
+                  Expanded(
+                      child: Center(
+                          child: Container(
+                              margin: EdgeInsets.only(left: 10),
+                              child: Text(
+                                "Indovina la parola inglese che verrà "
+                                    "selezionata casualmente ad ogni partita!"
+                                    " Quanto è ampio il tuo vocabolario?",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 20),
+                              ))))
+                ],
               ),
             ),
             Container(
-              margin: EdgeInsets.only(left: 10, top: 20),
-              child: Text(
-                  "Indovina la parola inglese che verrà selezionata casualmente ad ogni partita! Quanto è ampio il tuo vocabolario?",
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.fade,
-              style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20)
-               ),
-            ),
-
-            Container(
-              margin: EdgeInsets.only(top:50),
+              margin: EdgeInsets.only(top: 100),
               child: ElevatedButton(
                   child: Text("Gioca!"),
                   onPressed: () {
@@ -104,4 +108,3 @@ class _GameMenu extends State<GameMenu> {
     );
   }
 }
-
