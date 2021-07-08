@@ -7,6 +7,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
+import 'contacts.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +31,8 @@ class MyApp extends StatelessWidget {
         '/menu': (context) => GameMenu(title: "Titolo del gioco"),
         '/login': (context) => LoginScreen(title: "Login"),
         '/completeReg': (context) => CompleteRegScreen(title:"Completa la registrazione"),
-        '/profile': (context) => ProfileScreen(title: "Profilo")
+        '/profile': (context) => ProfileScreen(title: "Profilo"),
+        '/contacts': (context) => ContactsScreen(title: "Contatti")
       },
     );
   }
@@ -108,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
             buildDrawerHeader(),
             ListTile(
               title: Text('Contatti'),
-              onTap: () {},
+              onTap: () {Navigator.pushNamed(context, "/contacts");},
             ),
             ListTile(
               title: Text('Profilo'),

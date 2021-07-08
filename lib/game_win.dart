@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class GameWin extends StatefulWidget {
-  GameWin({Key? key, required this.title}) : super(key: key);
+class GameWinScreen extends StatefulWidget {
+  GameWinScreen ({Key? key, required this.title}) : super(key: key);
   final String title;
 
   @override
-  _GameWin createState() => _GameWin();
+  _GameWinScreen createState() => _GameWinScreen();
 }
-class _GameWin extends State<GameWin> {
+class _GameWinScreen extends State<GameWinScreen> {
 
 
   @override
