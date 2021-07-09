@@ -6,7 +6,6 @@ import 'package:italian_english_games_flutter/profile/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-
 import 'contacts.dart';
 
 
@@ -89,11 +88,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    //BISOGNEREBBE AVERE DEI METODI CHE SE STO ANCORA AUTENTICANDO RETURN ALTRO NEL MENTRE
-    //IDEM QUALCOSA CHE MI GESTISCE GLI ERRORI
-    // if(!_initialized) return Loading();
-    //if(_error) return AuthError();
-
     FirebaseAuth.instance.userChanges().listen((User? user){
       if (user==null)  {
         Navigator.pushNamed(context, '/login');
@@ -121,7 +115,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ])),
       body: Center(
         child: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
               margin: const EdgeInsets.symmetric(vertical: 100.0),
@@ -147,7 +140,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Container(
                   margin: EdgeInsets.only(left: 10),
                   child: ElevatedButton(
-                      child: Text("Testo di prova"),
+                      child: Text("Impiccato"),
                       onPressed: () {
                         Navigator.pushNamed(
                           context,

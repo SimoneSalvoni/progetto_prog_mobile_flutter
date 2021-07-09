@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 
 class LoginScreen extends StatefulWidget{
   LoginScreen({Key? key, required this.title}) : super(key: key);
@@ -165,17 +166,18 @@ class _LoginScreenState extends State<LoginScreen> {
             Container(margin: EdgeInsets.only(top: 20), child: _buildTitle()),
             Container(
                 width: 300,
-                margin: EdgeInsets.only(top:80),
+                margin: EdgeInsets.only(top: 80),
                 child: TextField(
-              controller: _emailListener,
-              decoration: InputDecoration(labelText: 'Email'),
-            )),
+                  controller: _emailListener,
+                  decoration: InputDecoration(labelText: 'Email'),
+                  keyboardType: TextInputType.emailAddress,
+                )),
             Container(
                 width: 300,
                 child: TextField(
               controller: _passwordListener,
               decoration: InputDecoration(labelText: "Password"),
-              obscureText: true,
+              obscureText: true
             )),
             _buildButtons()
           ],

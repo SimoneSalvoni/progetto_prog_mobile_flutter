@@ -18,33 +18,35 @@ enum Status { show, modify }
 class _ProfileScreenState extends State<ProfileScreen> {
   Status _status = Status.show;
   String _email = "";
+  String _oldEmail="";
   String _username = "";
+  String _password="";
   String _newPassword="";
   String _confNewPass="";
   String? _imageUrl;
   int _record = 0;
   TextEditingController _emailListener = TextEditingController();
   TextEditingController _usernameListener = TextEditingController();
-  TextEditingController _passwordListener = TextEditingController();
+  TextEditingController _newPasswordListener = TextEditingController();
   TextEditingController _confPassListener = TextEditingController();
+  TextEditingController _passwordListener = TextEditingController();
   final FirebaseAuth auth = FirebaseAuth.instance;
   final firebase_storage.FirebaseStorage storage =
       firebase_storage.FirebaseStorage.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   bool _modifyPassword = false;
   File? _newImageFile;
+  bool _needUserInfo = true;
 
   _ProfileScreenState() {
     _emailListener.addListener(_emailListen);
     _usernameListener.addListener(_usernameListen);
     _passwordListener.addListener(_passwordListen);
+    _newPasswordListener.addListener(_newPasswordListen);
     _confPassListener.addListener(_confPassListen);
   }
 
   void getUserInfo() async {
-    var storageRef = storage.ref().child(auth.currentUser!.uid);
-    _imageUrl = await storageRef.getDownloadURL();
-    if (_imageUrl == null) _imageUrl = "";
     var recordRef = firestore.collection('userRecords');
     await recordRef
         .doc(auth.currentUser!.uid)
@@ -52,8 +54,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
         .then((DocumentSnapshot documentSnapshot) {
       _record = documentSnapshot['impRecord'];
     });
+    var storageRef = storage.ref().child(auth.currentUser!.uid);
+    _imageUrl = await storageRef.getDownloadURL();
+    if (_imageUrl == null) _imageUrl = "";
+    _username = auth.currentUser!.displayName!;
+    _email = auth.currentUser!.email!;
+    _oldEmail = _email;
     setState(() {});
   }
+
 
   void _emailListen() {
     if (_emailListener.text.isEmpty)
@@ -70,8 +79,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void _passwordListen(){
-    if(_passwordListener.text.isEmpty) _newPassword ="";
-    else _newPassword = _passwordListener.text;
+    if(_passwordListener.text.isEmpty) _password="";
+    else _password = _passwordListener.text;
+  }
+
+  void _newPasswordListen(){
+    if(_newPasswordListener.text.isEmpty) _newPassword ="";
+    else _newPassword = _newPasswordListener.text;
   }
 
   void _confPassListen(){
@@ -101,7 +115,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Image.asset('imgs/default_profile.jpg', width: 200, height: 200),
       );
     }
-    else if(_newImageFile!=null){
+    else if(_newImageFile!=null && _status==Status.modify){
       return Container(
           margin: EdgeInsets.only(top: 20),
           child: Row(
@@ -116,6 +130,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: Icon(Icons.photo_outlined),
                         style: ElevatedButton.styleFrom(
                           shape: CircleBorder(),
+                          primary: Color(0xFFF9AA33)
                         ))),
               ]));
     }
@@ -135,6 +150,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: Icon(Icons.photo_outlined),
                           style: ElevatedButton.styleFrom(
                             shape: CircleBorder(),
+                              primary: Color(0xFFF9AA33)
                           ))),
                 ]));
       } else {
@@ -196,6 +212,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: TextField(
                 controller: _emailListener,
                 decoration: InputDecoration(labelText: "E-mail"),
+                keyboardType: TextInputType.emailAddress
               )),
           Container(
               width: 300,
@@ -212,10 +229,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         onPressed: () {
                           _email = auth.currentUser!.email!;
                           _username = auth.currentUser!.displayName!;
+                          _newImageFile=null;
                           _statusChange();
                         },
-                        child: Text("Annulla Modifiche")),
+                        child: Text("Annulla Modifiche"),
+                    style: ElevatedButton.styleFrom(
+                        primary: Color(0xFFF9AA33)
+                    )),
                     ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Color(0xFFF9AA33)
+                      ),
                         onPressed: () {
                           setState(() {
                             _modifyPassword = true;
@@ -232,12 +256,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Container( //TODO NON MI FA SCRIVERE
+          Container(
               width: 300,
               // margin: EdgeInsets.only(top:80),
               child: TextField(
                 controller: _emailListener,
                 decoration: InputDecoration(labelText: "E-mail"),
+                  keyboardType: TextInputType.emailAddress
               )),
           Container(
               width: 300,
@@ -250,12 +275,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: TextField(
                 decoration: InputDecoration(labelText: "Inserisci password"),
                 obscureText: true,
+                controller: _newPasswordListener
               )),
           Container(
               width: 300,
               child: TextField(
                 decoration: InputDecoration(labelText: "Conferma password"),
                 obscureText: true,
+                  controller: _confPassListener
               )),
           Container(
               margin: EdgeInsets.only(top: 30),
@@ -263,13 +290,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Color(0xFFF9AA33)
+                        ),
                         onPressed: () {
                           _email = auth.currentUser!.email!;
                           _username = auth.currentUser!.displayName!;
+                          _newImageFile=null;
                           _statusChange();
                         },
                         child: Text("Annulla Modifiche")),
                     ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Color(0xFFF9AA33)
+                        ),
                         onPressed: () {
                           setState(() {
                             _modifyPassword = false;
@@ -283,46 +317,55 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget buildFab() {
-    _username = auth.currentUser!.displayName!;
-    _email = auth.currentUser!.email!;
     if (_status == Status.show)
       return FloatingActionButton.extended(
         onPressed: _statusChange,
         label: Text("Modifica profilo"),
         icon: Icon(Icons.mode_edit),
+        backgroundColor: Color(0xFFF9AA33)
       );
     else
       return FloatingActionButton.extended(
           onPressed:(){
-            _modifyProfile();
-            _statusChange();
+            showDialog(context: context, builder: (BuildContext context) => _buildDialogue());
           },
           label: Text("Conferma modifica profilo"),
+          backgroundColor: Color(0xFFF9AA33),
           icon: Icon(Icons.save));
   }
 
-  void _modifyProfile() async{
-    if(_modifyPassword){
-      if(_newPassword==""){
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Inserisci la nuova password")));
-        return;
+  void _modifyProfile() async {
+    try {
+      if (_modifyPassword) {
+        if (_newPassword == "") {
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text("Inserisci la nuova password")));
+          return;
+        } else if (_confNewPass == "") {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text("Conferma la password")));
+          return;
+        } else if (_newPassword != _confNewPass) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text("Inserisci la nuova password")));
+          return;
+        } else
+          await auth.currentUser!.updatePassword(_newPassword);
       }
-      else if (_confNewPass=="") {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Conferma la password")));
-        return;
+      await auth.currentUser!.updateDisplayName(_username);
+      await auth.currentUser!.updateEmail(_email);
+      var storageRef = storage.ref().child(auth.currentUser!.uid);
+      if (_newImageFile != null) {
+        await storageRef.putFile(_newImageFile!);
+        _newImageFile = null;
       }
-      else if (_newPassword!=_confNewPass){
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Inserisci la nuova password")));
-        return;
-      }
-      else await auth.currentUser!.updatePassword(_newPassword);
-    }
-    await auth.currentUser!.updateDisplayName(_username);
-    await auth.currentUser!.updateEmail(_email);
-    var storageRef = storage.ref().child(auth.currentUser!.uid);
-    if(_newImageFile!=null){
-      await storageRef.putFile(_newImageFile!);
-      _newImageFile=null;
+      await auth.currentUser!.reload();
+      _needUserInfo=true;
+      _statusChange();
+    } on Exception catch(e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("C'è stato un errore")));
+      return;
     }
   }
 
@@ -333,15 +376,57 @@ class _ProfileScreenState extends State<ProfileScreen> {
     setState(() {});
   }
 
+  Widget _buildDialogue() {
+    return AlertDialog(
+        title: Text("Inserisci la tua password"),
+        content: TextField(
+          decoration: InputDecoration(hintText: "Password"),
+          controller: _passwordListener,
+          obscureText: true
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text("Chiudi"),
+            onPressed: () {
+              Navigator.pop(context, 'Cancel');
+            },
+          ),
+          TextButton(
+              child: Text("Conferma"),
+              onPressed: () {
+                _reauthenticate();
+                Navigator.pop(context);
+              }
+          )
+        ]
+    );
+  }
+
+  void _reauthenticate() async {
+      AuthCredential credential =
+          EmailAuthProvider.credential(email: _oldEmail, password: _password);
+      await FirebaseAuth.instance.currentUser!
+          .reauthenticateWithCredential(credential)
+          .then((value) {
+        _passwordListener.text = "";
+        _modifyProfile();
+      }).catchError((onError) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("C'è stato un errore nell'autenticazione")));
+      });
+  }
+
   @override
-  Widget build(BuildContext context) {
-    if (_imageUrl == null || _newImageFile!=null) getUserInfo();
+  Widget build(BuildContext context){
+    if (_needUserInfo) getUserInfo();
+    _needUserInfo=false;
     return Scaffold(
       appBar: AppBar(
           title: Text(widget.title),
           leading: BackButton(
             onPressed: () {
-              Navigator.pushNamed(context, '/');
+              if(_status==Status.show) Navigator.pushNamed(context, '/');
+              else _statusChange();
             },
           )),
       body: Center(
