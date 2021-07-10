@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class GameWinScreen extends StatefulWidget {
-  GameWinScreen ({Key? key, required this.title}) : super(key: key);
+class GameLoseScreen extends StatefulWidget {
+  GameLoseScreen ({Key? key, required this.title}) : super(key: key);
   final String title;
 
   @override
-  _GameWinScreen createState() => _GameWinScreen();
+  _GameLoseScreen createState() => _GameLoseScreen();
 }
-class _GameWinScreen extends State<GameWinScreen> {
+class _GameLoseScreen extends State<GameLoseScreen> {
 
 
   @override
@@ -32,7 +32,7 @@ class _GameWinScreen extends State<GameWinScreen> {
               children: <Widget>[
                 Container(
                     margin: EdgeInsets.only(top: 100),
-                    child: Text("HAI VINTO!",
+                    child: Text("HAI PERSO!",
                         style:
                         TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.green))),
 
@@ -42,12 +42,6 @@ class _GameWinScreen extends State<GameWinScreen> {
                         textAlign: TextAlign.left,
                         style:
                         TextStyle(fontSize: 22))),
-                Container(
-                    margin: EdgeInsets.only(top: 70, bottom: 120),
-                    child: Text("Punteggio:",
-                        textAlign: TextAlign.left,
-                        style:
-                        TextStyle(fontSize: 22 ))),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
