@@ -129,94 +129,90 @@ class _ImpGame extends State<ImpGame> {
               ),
               Container(
                 margin: EdgeInsets.only(left: 10, top: 5),
-                child: Table(
-                  defaultVerticalAlignment: TableCellVerticalAlignment.baseline,
-                  textBaseline: TextBaseline.alphabetic,
-                  //columnWidths: {1: FlexColumnWidth(10)},
+                child: Column(
+                  mainAxisAlignment: center,
                   children: [
-                    TableRow(children: [
-                      TableCell(
+                    Row(children: [
+                      Container(
                         child: createKey(0),
                       ),
-                      TableCell(
+                      Container(
                         child: createKey(1),
                       ),
-                      TableCell(
+                      Container(
                         child: createKey(2),
                       ),
-                      TableCell(
+                      Container(
                         child: createKey(3),
                       ),
-                      TableCell(
+                      Container(
                         child: createKey(4),
                       ),
-                      TableCell(
+                      Container(
                         child: createKey(5),
                       ),
-                      TableCell(
+                      Container(
                         child: createKey(6),
-                      )
-                    ]),
-                    TableRow(children: [
-                      TableCell(
+                      ),
+                      Container(
                         child: createKey(7),
                       ),
-                      TableCell(
+                      Container(
                         child: createKey(8),
                       ),
-                      TableCell(
+                      Container(
                         child: createKey(9),
                       ),
                     ]),
-                    TableRow(children: [
-                      TableCell(
+                    Row(children: [
+                      Container(
                         child: createKey(10),
                       ),
-                      TableCell(
+                      Container(
                         child: createKey(11),
                       ),
-                      TableCell(
+                      Container(
                         child: createKey(12),
                       ),
-                      TableCell(
+                      Container(
                         child: createKey(13),
                       ),
-                      TableCell(
+                      Container(
                         child: createKey(14),
                       ),
-                      TableCell(
+                      Container(
                         child: createKey(15),
                       ),
-                      TableCell(
+                      Container(
                         child: createKey(16),
                       ),
-                      TableCell(
+                      Container(
                         child: createKey(17),
                       ),
-                      TableCell(
+                      Container(
                         child: createKey(18),
                       ),
                     ]),
-                    TableRow(children: [
-                      TableCell(
+                    Row(children: [
+                      Container(
                         child: createKey(19),
                       ),
-                      TableCell(
+                      Container(
                         child: createKey(20),
                       ),
-                      TableCell(
+                      Container(
                         child: createKey(21),
                       ),
-                      TableCell(
+                      Container(
                         child: createKey(22),
                       ),
-                      TableCell(
+                      Container(
                         child: createKey(23),
                       ),
-                      TableCell(
+                      Container(
                         child: createKey(24),
                       ),
-                      TableCell(
+                      Container(
                         child: createKey(25),
                       ),
                     ]),
