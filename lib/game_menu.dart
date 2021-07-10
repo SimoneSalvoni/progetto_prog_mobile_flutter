@@ -72,7 +72,7 @@ class _GameMenu extends State<GameMenu> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Image.asset(
-                      'imgs/gioco-impiccato.jpg',
+                      'lib/imgs/gioco-impiccato.jpg',
                       height: 150,
                       width: 150,
                     ),
@@ -96,7 +96,7 @@ class _GameMenu extends State<GameMenu> {
               child: ElevatedButton(
                   child: Text("Gioca!"),
                   onPressed: () {
-                    //TODO navigation
+                    Navigator.pushNamed(context, '/game');
                   },
                   style: ElevatedButton.styleFrom(
                       primary: Color(0xFFF9AA33),

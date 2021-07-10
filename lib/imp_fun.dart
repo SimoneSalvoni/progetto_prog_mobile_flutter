@@ -5,11 +5,12 @@ class ImpFun {
   List<String> _words = [];
 
   Future readFromFile() async {
-    String fileText = await rootBundle.loadString('res/imp_words.txt');
+    String fileText = await rootBundle.loadString('lib/textFiles/words_3000.txt');
     _words = fileText.split('\n');
   }
 
-  String getWord() {
+  Future<String> getWord() async {
+    readFromFile();
     var rand = Random();
     int words = _words.length;
     int randNumber = rand.nextInt(words);

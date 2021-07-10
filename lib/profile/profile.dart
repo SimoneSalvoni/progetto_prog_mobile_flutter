@@ -112,7 +112,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           margin: EdgeInsets.only(top: 20),
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-            Image.asset('imgs/default_profile.jpg', width: 200, height: 200),
+            Image.asset('lib/imgs/default_profile.jpg', width: 200, height: 200),
             ConstrainedBox(
                 constraints: BoxConstraints.tightFor(width: 60, height: 60),
                 child: ElevatedButton(
@@ -125,7 +125,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     } else {
       return Container(
         margin: EdgeInsets.only(top: 20),
-        child: Image.asset('imgs/default_profile.jpg', width: 200, height: 200),
+        child: Image.asset('lib/imgs/default_profile.jpg', width: 200, height: 200),
       );
     }
     else if (_newImageFile != null && _status == Status.modify) {

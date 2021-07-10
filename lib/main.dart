@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:italian_english_games_flutter/auth/login.dart';
 import 'package:italian_english_games_flutter/auth/completeReg.dart';
+import 'package:italian_english_games_flutter/game_lose.dart';
 import 'package:italian_english_games_flutter/game_menu.dart';
+import 'package:italian_english_games_flutter/game_win.dart';
+import 'package:italian_english_games_flutter/game_screen.dart';
+import 'package:italian_english_games_flutter/imp_fun.dart';
 import 'package:italian_english_games_flutter/profile/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -27,6 +31,9 @@ class MyApp extends StatelessWidget {
       initialRoute: "/",
       routes: {
         '/menu': (context) => GameMenu(title: "Titolo del gioco"),
+        '/game': (context) => ImpGame (title: "Impiccato", impObj: ImpFun()),
+        '/game/win': (context) => GameWinScreen(title: "Vittoria"),
+        '/game/lose': (context) => GameLoseScreen(title: "Sconfitta"),
         '/login': (context) => LoginScreen(title: "Login"),
         '/completeReg': (context) =>
             CompleteRegScreen(title: "Completa la registrazione"),
@@ -82,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
             color: Color(0xFFF9AA33),
           ),
           child: Column(children: <Widget>[
-            Image.asset('imgs/default_profile.jpg', width: 50, height: 50),
+            Image.asset('lib/imgs/default_profile.jpg', width: 50, height: 50),
             Container(margin: EdgeInsets.only(top: 5), child: Text(_username))
           ]));
     }
@@ -132,12 +139,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Image.asset(
-                    'imgs/italia.png',
+                    'lib/imgs/italia.png',
                     width: 150,
                     height: 150,
                   ),
                   Image.asset(
-                    'imgs/bandiera-inglese-png-6.png',
+                    'lib/imgs/bandiera-inglese-png-6.png',
                     width: 150,
                     height: 150,
                   )
