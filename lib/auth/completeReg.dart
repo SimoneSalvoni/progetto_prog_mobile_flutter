@@ -5,6 +5,8 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
 
+///In questa schermata l'utente appena registrato sceglie il suo nome utente e la
+///sua foto profilo
 class CompleteRegScreen extends StatefulWidget {
   CompleteRegScreen({Key? key, required this.title}) : super(key: key);
   final String title;
@@ -35,24 +37,16 @@ class _CompleteRegScreen extends State<CompleteRegScreen> {
       _username = _userListener.text;
   }
 
+  ///Questa funzione inserisce le nuove informazioni dell'utente e poi riporta alla
+  ///schermata principale
   void _userInfo() async {
     if (_username != "") {
       auth.currentUser!.updateDisplayName(_username);
       var storageRef = storage.ref().child(_userUid);
-      /*
-    try {
-      await storageRef.putFile(file);
-    } on firebase_core.FirebaseException catch (e) {
-      // e.g, e.code == 'canceled'
-    }
-    MI DA' ERRORE L'EXCEPTION ANCHE SE L'HO PRESA DAL SITO...
-     */
       if (_image != null) await storageRef.putFile(_image!);
 
       var recordRef = firestore.collection("userRecords");
-      await recordRef.doc(auth.currentUser!.uid).set({
-        'impRecord': 0
-      });
+      await recordRef.doc(auth.currentUser!.uid).set({'impRecord': 0});
 
       Navigator.pushNamed(context, '/');
     } else {
@@ -62,6 +56,8 @@ class _CompleteRegScreen extends State<CompleteRegScreen> {
     }
   }
 
+  ///Questa funzione permette all'utente di scegliere un'immagine nella propria galleria
+  ///da usare come foto profilo
   void pickImage() async {
     var picker = ImagePicker();
     var pickedImage = await picker.getImage(source: ImageSource.gallery);
@@ -69,6 +65,7 @@ class _CompleteRegScreen extends State<CompleteRegScreen> {
     setState(() {});
   }
 
+  ///Restituisce l'immagine scelta dall'utente o un'immagine di default
   Widget buildImage() {
     if (_image == null)
       return Image.asset('imgs/default_profile.jpg', width: 150, height: 150);
@@ -80,8 +77,7 @@ class _CompleteRegScreen extends State<CompleteRegScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-            title: Text(widget.title)),
+        appBar: AppBar(title: Text(widget.title)),
         body: Center(
             child: Column(
           children: <Widget>[

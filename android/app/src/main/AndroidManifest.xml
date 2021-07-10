@@ -2,6 +2,7 @@
     package="com.example.italian_english_games_flutter">
    <application
         android:label="Italian-English Games (Flutter)"
+        android:screenOrientation="portrait"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"

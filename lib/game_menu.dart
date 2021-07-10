@@ -11,22 +11,23 @@ class GameMenu extends StatefulWidget {
 
 class _GameMenu extends State<GameMenu> {
 
-  Widget buildDialogue(){
+  ///Questa funzione crea il pop di info da mostrare se premuto il pulsante apposito
+  Widget buildDialogue() {
     return AlertDialog(
         title: Text("Info"),
-        content: Text("Questo è un gioco in cui bisogna scoprire una parola inglese scelta casualmente "
+        content: Text(
+            "Questo è un gioco in cui bisogna scoprire una parola inglese scelta casualmente "
             "tra quelle più utilizzate nella lingua. All'inizio saprai quante lettere compongono"
             "quella parola. A quel punto potrai iniziare a provare ad inserire le lettere che pensi "
             "possano formarla. Attenzione però, hai un numero di tentativi limitati!"),
         actions: <Widget>[
           TextButton(
             child: Text("Chiudi"),
-            onPressed: (){
+            onPressed: () {
               Navigator.pop(context, 'Cancel');
             },
           )
-        ]
-    );
+        ]);
   }
 
   @override
@@ -51,8 +52,7 @@ class _GameMenu extends State<GameMenu> {
                     onPressed: () {
                       showDialog(
                           context: context,
-                          builder: (BuildContext context) => buildDialogue()
-                      );
+                          builder: (BuildContext context) => buildDialogue());
                     },
                     style: ElevatedButton.styleFrom(
                         primary: Color(0xFFF9AA33),
@@ -63,7 +63,7 @@ class _GameMenu extends State<GameMenu> {
                 margin: EdgeInsets.only(top: 70),
                 child: Text("IMPICCATO",
                     style:
-                    TextStyle(fontSize: 50, fontWeight: FontWeight.bold))),
+                        TextStyle(fontSize: 50, fontWeight: FontWeight.bold))),
             Container(
               margin: EdgeInsets.only(top: 80),
               child: Row(
@@ -83,8 +83,8 @@ class _GameMenu extends State<GameMenu> {
                               margin: EdgeInsets.only(left: 10),
                               child: Text(
                                 "Indovina la parola inglese che verrà "
-                                    "selezionata casualmente ad ogni partita!"
-                                    " Quanto è ampio il tuo vocabolario?",
+                                "selezionata casualmente ad ogni partita!"
+                                " Quanto è ampio il tuo vocabolario?",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 20),
                               ))))

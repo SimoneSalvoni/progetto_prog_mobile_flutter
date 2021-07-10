@@ -8,7 +8,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'contacts.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -29,7 +28,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/menu': (context) => GameMenu(title: "Titolo del gioco"),
         '/login': (context) => LoginScreen(title: "Login"),
-        '/completeReg': (context) => CompleteRegScreen(title:"Completa la registrazione"),
+        '/completeReg': (context) =>
+            CompleteRegScreen(title: "Completa la registrazione"),
         '/profile': (context) => ProfileScreen(title: "Profilo"),
         '/contacts': (context) => ContactsScreen(title: "Contatti")
       },
@@ -46,21 +46,23 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   final FirebaseAuth auth = FirebaseAuth.instance;
   final firebase_storage.FirebaseStorage storage =
       firebase_storage.FirebaseStorage.instance;
-  String _username="";
+  String _username = "";
   String? _imageUrl;
 
-
-  void pickUserInfo() async{
+  /// Questa funzione recupera i dati dell'utente (nome, immagine di profilo) da
+  /// Firebase e richiede il build della schermata per inserire queste info
+  void pickUserInfo() async {
     _username = auth.currentUser!.displayName!;
     var storageRef = storage.ref().child(auth.currentUser!.uid);
     _imageUrl = await storageRef.getDownloadURL();
     setState(() {});
   }
 
+  /// Questa funzione restituisce il Drawer Header del NavDrawer. Se non si ha
+  /// l'immagine di profilo se ne mette una placeholder
   Widget buildDrawerHeader() {
     if (_imageUrl != null) {
       return DrawerHeader(
@@ -88,11 +90,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    FirebaseAuth.instance.userChanges().listen((User? user){
-      if (user==null)  {
+    FirebaseAuth.instance.userChanges().listen((User? user) {
+      if (user == null) {
         Navigator.pushNamed(context, '/login');
-      }
-      else {
+      } else {
         pickUserInfo();
       }
     });
@@ -102,17 +103,26 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       drawer: Drawer(
           child: ListView(padding: EdgeInsets.zero, children: <Widget>[
-            buildDrawerHeader(),
-            ListTile(
-              title: Text('Contatti'),
-              onTap: () {Navigator.pushNamed(context, "/contacts");},
-            ),
-            ListTile(
-              title: Text('Profilo'),
-              onTap: () {Navigator.pushNamed(context, "/profile");},
-            ),
-            ListTile(title: Text('Logout'), onTap: () {FirebaseAuth.instance.signOut();}) //nell'esempio c'era await all'inizio...
-          ])),
+        buildDrawerHeader(),
+        ListTile(
+          title: Text('Contatti'),
+          onTap: () {
+            Navigator.pushNamed(context, "/contacts");
+          },
+        ),
+        ListTile(
+          title: Text('Profilo'),
+          onTap: () {
+            Navigator.pushNamed(context, "/profile");
+          },
+        ),
+        ListTile(
+            title: Text('Logout'),
+            onTap: () {
+              FirebaseAuth.instance.signOut();
+              Navigator.pushNamed(context, "/login");
+            })
+      ])),
       body: Center(
         child: Column(
           children: <Widget>[
@@ -135,17 +145,13 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             Row(
-              // mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Container(
                   margin: EdgeInsets.only(left: 10),
                   child: ElevatedButton(
                       child: Text("Impiccato"),
                       onPressed: () {
-                        Navigator.pushNamed(
-                          context,
-                          '/menu',
-                        );
+                        Navigator.pushNamed(context, '/menu');
                       },
                       style: ElevatedButton.styleFrom(
                           primary: Color(0xFFF9AA33),
@@ -157,7 +163,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       'TROVA LE PAROLE!',
                       textAlign: TextAlign.center,
                       style:
-                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     )),
               ],
             )

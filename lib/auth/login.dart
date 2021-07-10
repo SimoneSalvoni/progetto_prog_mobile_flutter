@@ -2,48 +2,56 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 
-class LoginScreen extends StatefulWidget{
+class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key, required this.title}) : super(key: key);
   final String title;
+
   @override
   State<StatefulWidget> createState() => _LoginScreenState();
 }
 
-enum LoginOrRegister{
-  login,
-  register
-}
+///Variabile di questo tipo viene usata per mostrare una form di login o di registrazione
+enum LoginOrRegister { login, register }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   final FirebaseAuth auth = FirebaseAuth.instance;
   TextEditingController _emailListener = TextEditingController();
   TextEditingController _passwordListener = TextEditingController();
-  String _email="";
-  String _password="";
+  String _email = "";
+  String _password = "";
   LoginOrRegister _form = LoginOrRegister.login;
 
-  _LoginScreenState(){
+  _LoginScreenState() {
     _emailListener.addListener(_emailListen);
     _passwordListener.addListener(_passwordListen);
   }
 
-  void _emailListen (){
-    if (_emailListener.text.isEmpty)  _email="";
-    else _email = _emailListener.text;
-  }
-  void _passwordListen (){
-    if (_passwordListener.text.isEmpty)  _password="";
-    else _password = _passwordListener.text;
+  void _emailListen() {
+    if (_emailListener.text.isEmpty)
+      _email = "";
+    else
+      _email = _emailListener.text;
   }
 
-  void formChange() async{
+  void _passwordListen() {
+    if (_passwordListener.text.isEmpty)
+      _password = "";
+    else
+      _password = _passwordListener.text;
+  }
+
+  ///Modifica la tipologia di form
+  void formChange() async {
     setState(() {
-      if(_form==LoginOrRegister.register) _form = LoginOrRegister.login;
-      else _form=LoginOrRegister.register;
+      if (_form == LoginOrRegister.register)
+        _form = LoginOrRegister.login;
+      else
+        _form = LoginOrRegister.register;
     });
   }
 
+  ///Questa funzione costruisce i pulsanti da mostrare nella form, che cambiano
+  ///a dipendenza della tipolgia di form
   Widget _buildButtons() {
     if (_form == LoginOrRegister.login) {
       return Container(
@@ -94,6 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  ///Il titolo della schermata va adattato alla form mostrata
   Widget _buildTitle() {
     if (_form == LoginOrRegister.login) {
       return Text('Login',
@@ -103,6 +112,8 @@ class _LoginScreenState extends State<LoginScreen> {
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 60));
   }
 
+  ///Questa funzione esegue il login all'account dell'utente tramite Firebase Auth
+  ///Si usano email e password
   void _login() async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
@@ -120,6 +131,8 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  ///Questa funzione registra un nuovo utente sfruttando Firebase auth.
+  ///Ci si registra con email e password
   void _register() async {
     try {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
@@ -142,7 +155,8 @@ class _LoginScreenState extends State<LoginScreen> {
     auth.userChanges().listen((User? user) {
       if (user == null) {
       } else {
-        if (_form==LoginOrRegister.login) Navigator.pushNamed(context, '/');
+        if (_form == LoginOrRegister.login)
+          Navigator.pushNamed(context, '/');
         else {
           Navigator.pushNamed(context, '/completeReg');
         }
@@ -175,10 +189,9 @@ class _LoginScreenState extends State<LoginScreen> {
             Container(
                 width: 300,
                 child: TextField(
-              controller: _passwordListener,
-              decoration: InputDecoration(labelText: "Password"),
-              obscureText: true
-            )),
+                    controller: _passwordListener,
+                    decoration: InputDecoration(labelText: "Password"),
+                    obscureText: true)),
             _buildButtons()
           ],
         )));
