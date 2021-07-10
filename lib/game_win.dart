@@ -20,11 +20,11 @@ class _GameWinScreen extends State<GameWinScreen> {
 
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  int? _record;
+  int _record=-1;
   int? newRecord;
 
 
-  void getUserInfo() async {
+  void getUserInfo(points) async {
     var recordRef = firestore.collection('userRecords');
     await recordRef
         .doc(auth.currentUser!.uid)
@@ -32,6 +32,7 @@ class _GameWinScreen extends State<GameWinScreen> {
         .then((DocumentSnapshot documentSnapshot) {
       _record = documentSnapshot['impRecord'];
     });
+    if(checkRecord(points)) updateRecord(points);
     setState(() {});
   }
 
@@ -39,35 +40,40 @@ class _GameWinScreen extends State<GameWinScreen> {
     return (points>_record);
   }
 
+  void updateRecord(points) async{
+    var recordRef = firestore.collection("userRecords");
+    await recordRef.doc(auth.currentUser!.uid).set({'impRecord': points});
+  }
+
   Widget _buildPointsFields(points){
-    if(checkRecord(points))
+    if(checkRecord(points)){
       return Container(
           margin: EdgeInsets.only(top: 70, bottom: 120),
-        child: Row(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Text("Punteggio: "+points.toString(),
               textAlign: TextAlign.left,
               style:
-              TextStyle(fontSize: 22 )),
+              TextStyle(fontSize: 26 )),
           Text("NUOVO RECORD!",
           style: TextStyle(
-            fontSize:25
+            fontSize:30
           ))
         ],
-      ));
+      ));}
     else return Container(
         margin: EdgeInsets.only(top: 70, bottom: 120),
         child: Text("Punteggio: "+points.toString(),
             textAlign: TextAlign.left,
-            style: TextStyle(fontSize: 22 )));
+            style: TextStyle(fontSize: 26 )));
   }
 
 
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as WinArguments ;
-    if(_record==null) getUserInfo();
+    if(_record<0) getUserInfo(args.points);
     return Scaffold(
       appBar: AppBar(
           title: Text(widget.title),
@@ -84,26 +90,26 @@ class _GameWinScreen extends State<GameWinScreen> {
                     margin: EdgeInsets.only(top: 100),
                     child: Text("HAI VINTO!",
                         style:
-                        TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.green))),
+                        TextStyle(fontSize: 50, fontWeight: FontWeight.bold, color: Colors.green))),
 
                 Container(
                     margin: EdgeInsets.only(top: 70),
                     child: Text("La parola era: "+args.solution,
                         textAlign: TextAlign.left,
                         style:
-                        TextStyle(fontSize: 22))),
+                        TextStyle(fontSize: 26))),
                 _buildPointsFields(args.points),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     ElevatedButton(
-                        child: Text("TORNA AL MENÙ"),
+                        child: Text("MENÙ"),
                         onPressed: () {
                           Navigator.pushNamed(context, '/menu');
                         },
                         style: ElevatedButton.styleFrom(
                             primary: Color(0xFFF9AA33),
-                            textStyle: TextStyle(fontSize: 22))),
+                            textStyle: TextStyle(fontSize: 30))),
                     SizedBox(width: 50),
                     ElevatedButton(
                         child: Text("RIGIOCA"),
@@ -112,7 +118,7 @@ class _GameWinScreen extends State<GameWinScreen> {
                         },
                         style: ElevatedButton.styleFrom(
                             primary: Color(0xFFF9AA33),
-                            textStyle: TextStyle(fontSize: 22))),
+                            textStyle: TextStyle(fontSize: 30))),
                   ],
                 ),
               ]

@@ -4,14 +4,14 @@ import 'package:flutter/services.dart' show rootBundle;
 class ImpFun {
   List<String> _words = [];
 
-  Future readFromFile() async {
+  Future<List<String>> readFromFile() async {
     String fileText = await rootBundle.loadString('lib/textFiles/words_3000.txt');
-    _words = fileText.split('\n');
+    return fileText.split("\r\n");
   }
 
   Future<String> getWord() async {
-    readFromFile();
     var rand = Random();
+    _words = await readFromFile();
     int words = _words.length;
     int randNumber = rand.nextInt(words);
     return _words[randNumber];

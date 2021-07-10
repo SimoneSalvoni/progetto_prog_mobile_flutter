@@ -38,24 +38,26 @@ class _GameLoseScreen extends State<GameLoseScreen> {
             margin: EdgeInsets.only(top: 100),
             child: Text("HAI PERSO!",
                 style: TextStyle(
-                    fontSize: 30,
+                    fontSize: 50,
                     fontWeight: FontWeight.bold,
-                    color: Colors.green))),
+                    color: Colors.red))),
         Container(
             margin: EdgeInsets.only(top: 70),
             child: Text("La parola era: " + args.solution,
-                textAlign: TextAlign.left, style: TextStyle(fontSize: 22))),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+                textAlign: TextAlign.left, style: TextStyle(fontSize: 26))),
+        Container(
+          margin: EdgeInsets.only(top:150),
+            child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             ElevatedButton(
-                child: Text("TORNA AL MENÙ"),
+                child: Text("MENÙ"),
                 onPressed: () {
                   Navigator.pushNamed(context, '/menu');
                 },
                 style: ElevatedButton.styleFrom(
                     primary: Color(0xFFF9AA33),
-                    textStyle: TextStyle(fontSize: 22))),
+                    textStyle: TextStyle(fontSize: 30))),
             SizedBox(width: 50),
             ElevatedButton(
                 child: Text("RIGIOCA"),
@@ -64,9 +66,9 @@ class _GameLoseScreen extends State<GameLoseScreen> {
                 },
                 style: ElevatedButton.styleFrom(
                     primary: Color(0xFFF9AA33),
-                    textStyle: TextStyle(fontSize: 22))),
+                    textStyle: TextStyle(fontSize: 30))),
           ],
-        ),
+        )),
       ])),
     ); // This trailing comma makes auto-formatting nicer for build methods.
   }
