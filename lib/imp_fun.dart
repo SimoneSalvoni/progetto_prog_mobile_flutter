@@ -5,7 +5,8 @@ class ImpFun {
   List<String> _words = [];
 
   Future<List<String>> readFromFile() async {
-    String fileText = await rootBundle.loadString('lib/textFiles/words_3000.txt');
+    String fileText =
+        await rootBundle.loadString('lib/textFiles/words_3000.txt');
     return fileText.split("\r\n");
   }
 

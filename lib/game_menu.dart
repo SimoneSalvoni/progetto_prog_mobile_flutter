@@ -10,7 +10,6 @@ class GameMenu extends StatefulWidget {
 }
 
 class _GameMenu extends State<GameMenu> {
-
   ///Questa funzione crea il pop di info da mostrare se premuto il pulsante apposito
   Widget buildDialogue() {
     return AlertDialog(

@@ -1,3 +1,3 @@
-class Qwerty{
+class Qwerty {
   String qwerty = 'qwertyuiopasdfghjklzxcvbnm';
 }

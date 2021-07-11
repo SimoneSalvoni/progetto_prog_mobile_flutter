@@ -27,11 +27,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.indigo,
       ),
-      home: MyHomePage(title: 'Italian-English Games'),
+      home: MainMenu(title: 'Italian-English Games'),
       initialRoute: "/",
       routes: {
         '/menu': (context) => GameMenu(title: "Titolo del gioco"),
-        '/game': (context) => ImpGame (title: "Impiccato", impObj: ImpFun()),
+        '/game': (context) => ImpGame(title: "Impiccato", impObj: ImpFun()),
         '/game/win': (context) => GameWinScreen(title: "Vittoria"),
         '/game/lose': (context) => GameLoseScreen(title: "Sconfitta"),
         '/login': (context) => LoginScreen(title: "Login"),
@@ -44,15 +44,15 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
+class MainMenu extends StatefulWidget {
+  MainMenu({Key? key, required this.title}) : super(key: key);
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MainMenuState createState() => _MainMenuState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MainMenuState extends State<MainMenu> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final firebase_storage.FirebaseStorage storage =
       firebase_storage.FirebaseStorage.instance;

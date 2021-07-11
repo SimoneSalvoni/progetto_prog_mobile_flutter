@@ -68,7 +68,8 @@ class _CompleteRegScreen extends State<CompleteRegScreen> {
   ///Restituisce l'immagine scelta dall'utente o un'immagine di default
   Widget buildImage() {
     if (_image == null)
-      return Image.asset('lib/imgs/default_profile.jpg', width: 150, height: 150);
+      return Image.asset('lib/imgs/default_profile.jpg',
+          width: 150, height: 150);
     else {
       return Image.file(_image!, width: 150, height: 150);
     }

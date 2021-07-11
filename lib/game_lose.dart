@@ -46,29 +46,29 @@ class _GameLoseScreen extends State<GameLoseScreen> {
             child: Text("La parola era: " + args.solution,
                 textAlign: TextAlign.left, style: TextStyle(fontSize: 26))),
         Container(
-          margin: EdgeInsets.only(top:150),
+            margin: EdgeInsets.only(top: 150),
             child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            ElevatedButton(
-                child: Text("MENÙ"),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/menu');
-                },
-                style: ElevatedButton.styleFrom(
-                    primary: Color(0xFFF9AA33),
-                    textStyle: TextStyle(fontSize: 30))),
-            SizedBox(width: 50),
-            ElevatedButton(
-                child: Text("RIGIOCA"),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/game');
-                },
-                style: ElevatedButton.styleFrom(
-                    primary: Color(0xFFF9AA33),
-                    textStyle: TextStyle(fontSize: 30))),
-          ],
-        )),
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                ElevatedButton(
+                    child: Text("MENÙ"),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/menu');
+                    },
+                    style: ElevatedButton.styleFrom(
+                        primary: Color(0xFFF9AA33),
+                        textStyle: TextStyle(fontSize: 30))),
+                SizedBox(width: 50),
+                ElevatedButton(
+                    child: Text("RIGIOCA"),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/game');
+                    },
+                    style: ElevatedButton.styleFrom(
+                        primary: Color(0xFFF9AA33),
+                        textStyle: TextStyle(fontSize: 30))),
+              ],
+            )),
       ])),
     ); // This trailing comma makes auto-formatting nicer for build methods.
   }

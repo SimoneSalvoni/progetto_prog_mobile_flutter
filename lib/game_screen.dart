@@ -28,39 +28,37 @@ class _ImpGame extends State<ImpGame> {
     return LetterStatus.unknown;
   });
 
-  void newGame() {
-    setState(() {
-      impState = 0;
-      chooseWord();
-    });
-  }
-
-
   Widget createKey(index) {
-    if(letterStatus[index]==LetterStatus.unknown)
-    return Container(
-      width: 30,
-      child: TextButton(
-          style: TextButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
-          onPressed: () {
-            checkLetter(keyboard.qwerty[index], index);
-          },
-          child: Text(keyboard.qwerty[index].toUpperCase())),
-    );
-    else if (letterStatus[index]==LetterStatus.right)
+    if (letterStatus[index] == LetterStatus.unknown)
       return Container(
         width: 30,
         child: TextButton(
-            style: TextButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
-            onPressed: () { },
-            child: Text(keyboard.qwerty[index].toUpperCase(),style:TextStyle(color: Colors.green))),
+            style:
+                TextButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
+            onPressed: () {
+              checkLetter(keyboard.qwerty[index], index);
+            },
+            child: Text(keyboard.qwerty[index].toUpperCase())),
       );
-    else return Container(
+    else if (letterStatus[index] == LetterStatus.right)
+      return Container(
         width: 30,
         child: TextButton(
-            style: TextButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
-            onPressed: () { },
-            child: Text(keyboard.qwerty[index].toUpperCase(), style:TextStyle( color: Colors.red))),
+            style:
+                TextButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
+            onPressed: () {},
+            child: Text(keyboard.qwerty[index].toUpperCase(),
+                style: TextStyle(color: Colors.green))),
+      );
+    else
+      return Container(
+        width: 30,
+        child: TextButton(
+            style:
+                TextButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
+            onPressed: () {},
+            child: Text(keyboard.qwerty[index].toUpperCase(),
+                style: TextStyle(color: Colors.red))),
       );
   }
 
@@ -79,11 +77,11 @@ class _ImpGame extends State<ImpGame> {
       if (c == chosenWord![i]) ind.add(i);
     }
     if (ind.isEmpty) {
-      letterStatus[index]=LetterStatus.wrong;
+      letterStatus[index] = LetterStatus.wrong;
       letterIsNotPresent();
       return false;
     } else {
-      letterStatus[index]=LetterStatus.right;
+      letterStatus[index] = LetterStatus.right;
       letterIsPresent(c, ind);
       return true;
     }
@@ -101,7 +99,7 @@ class _ImpGame extends State<ImpGame> {
   void letterIsPresent(c, ind) {
     setState(() {
       for (int i = 0; i < ind.length; i++) {
-        shownWord = shownWord.replaceRange(ind[i], ind[i]+1, c);
+        shownWord = shownWord.replaceRange(ind[i], ind[i] + 1, c);
       }
       if (shownWord == chosenWord) {
         num points = pointsCalc(chosenWord!.length, impState);

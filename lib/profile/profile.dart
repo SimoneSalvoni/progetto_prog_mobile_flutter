@@ -38,7 +38,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   bool _modifyPassword = false; // se l'utente vuole modificare la password
   File? _newImageFile; //Una nuova immagine scelta dall'utente viene salvata qua
-  bool _needUserInfo = true; //Questa variabile è usata per sapere se bisogna ri-ottenere i dati dell'utente
+  bool _needUserInfo =
+      true; //Questa variabile è usata per sapere se bisogna ri-ottenere i dati dell'utente
 
   _ProfileScreenState() {
     _emailListener.addListener(_emailListen);
@@ -47,7 +48,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _newPasswordListener.addListener(_newPasswordListen);
     _confPassListener.addListener(_confPassListen);
   }
-
 
   ///Questa funzione ottiene i dati dell'utente da Firebase (nome utente, record e foto profilo)
   ///e richiede il ricaricamento della schermata
@@ -112,7 +112,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           margin: EdgeInsets.only(top: 20),
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-            Image.asset('lib/imgs/default_profile.jpg', width: 200, height: 200),
+            Image.asset('lib/imgs/default_profile.jpg',
+                width: 200, height: 200),
             ConstrainedBox(
                 constraints: BoxConstraints.tightFor(width: 60, height: 60),
                 child: ElevatedButton(
@@ -125,7 +126,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     } else {
       return Container(
         margin: EdgeInsets.only(top: 20),
-        child: Image.asset('lib/imgs/default_profile.jpg', width: 200, height: 200),
+        child: Image.asset('lib/imgs/default_profile.jpg',
+            width: 200, height: 200),
       );
     }
     else if (_newImageFile != null && _status == Status.modify) {
